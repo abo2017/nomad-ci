@@ -1,10 +1,14 @@
 FROM alpine:3.3
 
+COPY apt.conf /etc/apt/
+COPY docker.env /etc/
+
 WORKDIR /
 
 # consul-template
 ADD https://releases.hashicorp.com/consul-template/0.14.0/consul-template_0.14.0_linux_amd64.zip consul-template.zip
-RUN apk add --no-cache unzip && \
+RUN . /etc/docker.env && \
+    apk add --no-cache unzip && \
     unzip consul-template.zip && \
     rm consul-template.zip
 
